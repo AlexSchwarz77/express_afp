@@ -68,6 +68,9 @@ const deleteProduct = async (req: Request, res: Response) => {
 }
 
 const createProduct = async (req: Request, res: Response) => {
+
+    console.log(req.body);
+    
     await dbProduct.createProduct(req.body)
         .then(
             response => { res.status(201).send({ message: 'Produkt angelegt' }) }
