@@ -1,9 +1,21 @@
+import { Categories } from "../../model/categories";
 import { Product } from "../../model/product";
 import { connection } from "./db";
 
+import *  as sub from "./db.suppliers";
+import * as cat from "./db.categories";
+
 const selectAll = async (): Promise<Array<Product>> => {
     try {
-        return await connection.query("SELECT * FROM product");
+        const resultsProd = await connection.query("SELECT * FROM product  ORDER BY id ASC");
+        const resultsCat = await cat.default.selectAll();
+        const resultsSup = await sub.default.selectAll();
+        
+        resultsProd.forEach(element => {
+            console.log(element);
+            
+        });
+        return resultsProd
     } catch (err) {
         throw err;
     }
@@ -43,14 +55,12 @@ const deleteProduct = async (id:number): Promise<any> =>{
 
 const createProduct = async (product: Product): Promise<Product> => {
     try{
-        const stmt: Array<Product> = await connection.query(`SELECT * FROM product WHERE id in (${product.id})`);
-        if(stmt.length == 0){
+             for(let cat  of product.category) {
+                await connection.query(`INSERT INTO product_categories(product_id, category_id) VALUES(${product.id}, ${cat.category_id} )`)
+             } 
             return await connection.query(`INSERT INTO product VALUES(${product.id}, '${product.name}', ${product.price})`);
             // alternative
-            // return await connection.query(`INSERT INTO product VALUES($1)`, [product]);
-        }else{
-            throw new Error("Id ist bereits vorhanden");
-        }    
+            // return await connection.query(`INSERT INTO product VALUES($1)`, [product]);    
     }catch(err){
         throw err;
     }
