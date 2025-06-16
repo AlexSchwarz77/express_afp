@@ -3,7 +3,7 @@ import * as dotenv from 'dotenv';
 
 dotenv.config();
 
-export const connection = createPool({
+export let connection = createPool({
     host: process.env.DATABASE_HOST,
     port: parseInt(process.env.DATABASE_PORT),
     user: process.env.DATABASE_USER,
