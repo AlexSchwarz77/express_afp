@@ -53,3 +53,5 @@ function rabatt(artikel, rabatt): number{
     }
     return rabattGesamt;
 }
+
+prozente(ausgabe: zweidimensionales Array vom Typ Integer): eindimensionales Array vom Typ Double

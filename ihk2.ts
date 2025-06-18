@@ -1,5 +1,4 @@
 function generateReport(vka: Array<any>){
-   
    let gesamtSummeNetto: number = 0.0;
    let gesamtSummeProv: number = 0.0;
    let gesamtGesamtSummeNetto: number = 0.0;
